@@ -25,6 +25,10 @@ class StudentController extends Controller
      */
     public function create(Request $req)
     {
+        $count = Student_informations::where('registration_no','=',$req->reg_no)->count();
+        if ($count>0) {
+            return redirect()->route('home')->with('status', 'Registration number already exist! Try another.');
+        }
         $student= new Student_informations;
         $student->full_name=$req->full_name;
         $student->gender=$req->gender;
